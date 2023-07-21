@@ -14,6 +14,7 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use("/api/contacts", contactRoutes);
 app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api/cars",require("./routes/carRoutes") );
 app.use(errorHandler);
 
 //restore user from session
