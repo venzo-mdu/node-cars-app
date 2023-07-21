@@ -81,4 +81,14 @@ const currentUser = asyncHandler(async(req,res)=>{
     //res.json({message:"current user"});
 });
 
-module.exports = {registerUser,loginUser,currentUser};
+//@desc current user 
+//@route api/users/current
+//@access public
+const usersList = asyncHandler(async(req,res)=>{
+    const usersList = await User.find();
+    //console.log("in controller",user);
+    //res.json(req.user);
+    res.status(200).json(usersList);
+});
+
+module.exports = {registerUser,loginUser,currentUser,usersList};

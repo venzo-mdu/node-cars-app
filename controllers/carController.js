@@ -67,4 +67,17 @@ const updateCars = asyncHandler(async(req,res)=>{
     res.status(200).json(updatedCars);
 });
 
-module.exports = {createCars,getCars,getCarByid,updateCars};
+const deleteCars = asyncHandler(async(req,res)=>{
+    console.log("inside car controller 1");
+    const cars = await Cars.findById(req.params.id);
+    console.log(cars)
+    if(!cars){
+        res.status(404);
+        throw new Error("car not found");
+    }
+    await Cars.deleteOne({ _id: req.params.id });
+    res.status(200).json(cars);
+
+});
+
+module.exports = {createCars,getCars,getCarByid,updateCars,deleteCars};

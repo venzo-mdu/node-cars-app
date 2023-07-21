@@ -11,6 +11,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 //express inbuild middleware for accepting request body
+// /app.use('trust proxy',true)
 app.use(express.json());
 app.use("/api/contacts", contactRoutes);
 app.use("/api/users", require("./routes/userRoutes"));
