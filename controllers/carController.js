@@ -45,4 +45,26 @@ const getCarByid = asyncHandler(async(req,res)=>{
     }
     res.status(200).json(cars);
 });
-module.exports = {createCars,getCars,getCarByid};
+
+//@desc update contacts
+//@route api/contacts/1
+//@access public
+const updateCars = asyncHandler(async(req,res)=>{
+    const cars = await Cars.findById(req.params.id);
+    //console.log(contact);
+    if(!cars){
+        res.status(404);
+        throw new Error("Cars not found");
+    }
+    //console.log("reqest bdy",req.body);
+    
+    const updatedCars = await Cars.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }
+    );
+    
+    res.status(200).json(updatedCars);
+});
+
+module.exports = {createCars,getCars,getCarByid,updateCars};
