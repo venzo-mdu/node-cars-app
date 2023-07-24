@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken")
 //@route api/users/register
 //@access public
 const registerUser = asyncHandler(async(req,res)=>{
-    const {username,email,password} = req.body;
+    const { username,email,password} = req.body;
     if(!username || !password || !email){
         res.status(400);
         throw new Error("All fields are mandatory");
@@ -52,7 +52,6 @@ const loginUser = asyncHandler(async(req,res)=>{
         throw new Error("All fields are mandatory")
     }
     const user = await User.findOne({email});
-
     if(user && (await bcrypt.compare(password,user.password))){
         const accessToken = jwt.sign({
             user:{
@@ -74,9 +73,10 @@ const loginUser = asyncHandler(async(req,res)=>{
 
 //@desc current user 
 //@route api/users/current
-//@access public
+//@access private
 const currentUser = asyncHandler(async(req,res)=>{
     //console.log("in controller",user);
+    //making route privates
     res.json(req.user);
     //res.json({message:"current user"});
 });
@@ -86,8 +86,6 @@ const currentUser = asyncHandler(async(req,res)=>{
 //@access public
 const usersList = asyncHandler(async(req,res)=>{
     const usersList = await User.find();
-    //console.log("in controller",user);
-    //res.json(req.user);
     res.status(200).json(usersList);
 });
 
