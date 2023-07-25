@@ -4,25 +4,37 @@ const {getAllCars,getCars,createCars,getCarByid,updateCars,deleteCars} = require
 const validateToken = require("../middleware/validateTokenHandler");
 const multer = require("multer");
 const Cars = require("../models/carModels");
+const fs = require('fs');
 
 //user based access using access token
 //router.use(validateToken);
+const cloudinary = require('cloudinary').v2;
 
-const Storage = multer.diskStorage({
-    destination: "uploads",
-    filename:(req,file,cb) =>{
-        cb(null,file.originalname);
-    },
-});
+cloudinary.config({ 
+        cloud_name: 'dph227bch', 
+        api_key: '671337158813626', 
+        api_secret: 'ItaSlE_wJILfAnc6855VfZil09g',
+        secure: true
+      });
 
-const upload = multer({
-    storage:Storage
-}).single('testImg');
+// const Storage = multer.diskStorage({
+//     destination: (req,file,cb) =>{
+//         cb(null,"uploads");
+//     },
+//     filename:(req,file,cb) =>{
+//         cb(null,file.originalname);
+//     },
+// });
+
+const upload = multer({ dest: 'uploads/' });
+// const upload = multer({
+//     storage:Storage
+// }).single('testImg');
 
 router.get("/getAll",getAllCars);
 router.get("/",validateToken,getCars);
 //upload for image uploading
-router.post("/",upload,validateToken,createCars);
+router.post("/", upload.single("testImg"),createCars);
 router.get("/:id",validateToken,getCarByid);
 router.put("/:id",validateToken,updateCars);
 router.delete("/:id",validateToken,deleteCars);

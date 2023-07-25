@@ -2,11 +2,18 @@ const express = require("express");
 const dotenv = require("dotenv").config();
 const errorHandler = require("./middleware/errorHandler");
 const connectdb = require("./config/dbConnection");
+// const fileUpload = require('express-fileupload');
+
 
 connectdb();
 const app = express();
 
+
 const port = process.env.PORT || 5000;
+
+// app.use(fileUpload({
+//     useTempFiles:true
+// }))
 
 //express inbuild middleware for accepting request body
 // /app.use('trust proxy',true)
@@ -20,5 +27,3 @@ app.use('/uploads',express.static('uploads'));
 app.listen(port, () =>{
     console.log(`server is running port: ${port}`)
 })
-
-

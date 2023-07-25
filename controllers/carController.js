@@ -1,7 +1,8 @@
 const Cars = require("../models/carModels");
 const asyncHandler = require("express-async-handler");
-const carModels = require("../models/carModels");
+const cloudinary = require('cloudinary').v2;
 //const upload = require("../middleware/uploadImageHandler")
+//const fs = require('fs');
 
 //@desc get All cars
 //@route api/cars/getAll
@@ -28,25 +29,34 @@ const getCars = asyncHandler(async(req,res)=>{
     res.status(200).json(cars);
 });
 
+cloudinary.config({ 
+        cloud_name: 'dph227bch', 
+        api_key: '671337158813626', 
+        api_secret: 'ItaSlE_wJILfAnc6855VfZil09g',
+        secure: true
+      });
+
 //@desc create car
 //@route api/cars/
 //@access private
-const createCars = asyncHandler(async(req,res,next)=>{
-        console.log(req.body);
-        console.log(req.file);
-        const car =  new Cars({
-        carname:req.body.carname,
-        model:req.body.model,
-        year:req.body.year,
-        image:req.file.filename,
-        user_id:req.user.id 
-    });
-    car.save()
-    .then(result =>{
-        console.log(result);
-        res.status(200).json();
-    })
-    });
+const createCars = asyncHandler(async(req,res)=>{
+    const result = await cloudinary.uploader.upload(req.file.path);
+    const imageUrl = result.secure_url;
+    console.log(req.body);
+    console.log(req.file);
+    await Cars.create({
+    carname:req.body.carname,
+    model:req.body.model,
+    year:req.body.year,
+    image:imageUrl
+    
+}).then((res)=>{
+    console.log("image and details saved success")
+}).catch((err)=>{
+    console.log(err,"error has occured")
+});
+res.send('Image and details saved successfully');
+});
     
 //@desc get one car
 //@route api/cars/:id
