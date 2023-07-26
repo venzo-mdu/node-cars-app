@@ -23,9 +23,9 @@ const carSchema = mongoose.Schema(
             type:String,
             required:[true,"please add price"]
         },
-        image:{
-            type:String
-        },
+        // image:{
+        //     type:String
+        // },
         
         carnumber:{
             type:String,
