@@ -57,7 +57,7 @@ const createCars = asyncHandler(async (req, res) => {
             // powersteering: req.body.powersteering,
             // noofowners: req.body.noofowners,
             // kilometer: req.body.kilometer,
-            image: imageUrl
+            //image: imageUrl
         });
         // res.send('Image and details saved successfully');
     } catch (err) {
