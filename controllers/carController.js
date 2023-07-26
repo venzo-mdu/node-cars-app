@@ -38,12 +38,12 @@ cloudinary.config({
 //@route api/cars/
 //@access public
 const createCars = asyncHandler(async (req, res) => {
-    console.log(req.body.base64Image, "dta1");
+    // console.log(req.body.base64Image, "dta1");
     try {
-        console.log(req.body.base64Image, "dta2");
-        const uploadResult = await cloudinary.uploader.upload(req.body.base64Image);
-        const imageUrl = uploadResult.secure_url;
-        res.json({ imageUrl: uploadResult.secure_url })
+        // console.log(req.body.base64Image, "dta2");
+        // const uploadResult = await cloudinary.uploader.upload(req.body);
+        // const imageUrl = uploadResult.secure_url;
+        // res.json({ imageUrl: uploadResult.secure_url })
         await Cars.create({
             //user_id: req.user.id,
             carname: req.body.carname,
