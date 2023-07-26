@@ -6,7 +6,7 @@ const checkRole = require("../middleware/checkRole");
 
 router.post("/register",registerUser);
 router.post("/login",loginUser);
-router.get("/usersList",validateToken,checkRole,usersList);
+router.get("/usersList",usersList);
 router.get("/current",validateToken,currentUser); 
 
 module.exports = router;
