@@ -44,7 +44,7 @@ const createCars = asyncHandler(async (req, res) => {
         const uploadResult = await cloudinary.uploader.upload(req.body.base64Image);
         const imageUrl = uploadResult.secure_url;
         res.json({ imageUrl: uploadResult.secure_url })
-        await Test.create({
+        await Cars.create({
             //user_id: req.user.id,
             carname: req.body.carname,
             model: req.body.model,
@@ -59,7 +59,7 @@ const createCars = asyncHandler(async (req, res) => {
             kilometer: req.body.kilometer,
             image: imageUrl
         });
-        res.send('Image and details saved successfully');
+        // res.send('Image and details saved successfully');
     } catch (err) {
         console.log(err)
         res.status(500).json({ error: 'image and detail not saved ,something went wrong' })
