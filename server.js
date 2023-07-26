@@ -15,6 +15,8 @@ const port = process.env.PORT || 5000;
 // app.use(fileUpload({
 //     useTempFiles:true
 // }))
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload());
 
 //express inbuild middleware for accepting request body
 // /app.use('trust proxy',true)
