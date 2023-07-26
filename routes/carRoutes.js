@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const {getAllCars,getCars,createCars,getCarByid,updateCars,deleteCars} = require("../controllers/carController");
 const validateToken = require("../middleware/validateTokenHandler");
 // const upload = multer({ dest: 'uploads/' });

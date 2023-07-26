@@ -3,7 +3,7 @@ const dotenv = require("dotenv").config();
 const errorHandler = require("./middleware/errorHandler");
 const connectdb = require("./config/dbConnection");
 // const fileUpload = require('express-fileupload');
-
+const bodyParser = require('body-parser');
 
 connectdb();
 const app = express();
@@ -16,7 +16,7 @@ const port = process.env.PORT || 5000;
 //     useTempFiles:true
 // }))
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(fileUpload());
+// app.use(fileUpload());
 
 //express inbuild middleware for accepting request body
 // /app.use('trust proxy',true)
