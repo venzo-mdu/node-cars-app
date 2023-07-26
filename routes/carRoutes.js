@@ -3,21 +3,21 @@ const router = express.Router();
 const {getAllCars,getCars,createCars,getCarByid,updateCars,deleteCars} = require("../controllers/carController");
 const validateToken = require("../middleware/validateTokenHandler");
 const multer = require("multer");
-const Cars = require("../models/carModels");
-const fs = require('fs');
+const upload = multer({ dest: 'uploads/' });
+
+router.get("/getAll",getAllCars);
+router.get("/",validateToken,getCars);
+router.post("/",validateToken, upload.single("testImg"),createCars);
+router.get("/:id",validateToken,getCarByid);
+router.put("/:id",validateToken,updateCars);
+router.delete("/:id",validateToken,deleteCars);
+
+module.exports = router;
 
 //user based access using access token
 //router.use(validateToken);
-const cloudinary = require('cloudinary').v2;
 
-cloudinary.config({ 
-        cloud_name: 'dph227bch', 
-        api_key: '671337158813626', 
-        api_secret: 'ItaSlE_wJILfAnc6855VfZil09g',
-        secure: true
-      });
-
-// const Storage = multer.diskStorage({
+/*// const Storage = multer.diskStorage({
 //     destination: (req,file,cb) =>{
 //         cb(null,"uploads");
 //     },
@@ -26,17 +26,6 @@ cloudinary.config({
 //     },
 // });
 
-const upload = multer({ dest: 'uploads/' });
 // const upload = multer({
 //     storage:Storage
-// }).single('testImg');
-
-router.get("/getAll",getAllCars);
-router.get("/",validateToken,getCars);
-//upload for image uploading
-router.post("/", upload.single("testImg"),createCars);
-router.get("/:id",validateToken,getCarByid);
-router.put("/:id",validateToken,updateCars);
-router.delete("/:id",validateToken,deleteCars);
-
-module.exports = router;
+// }).single('testImg')*/

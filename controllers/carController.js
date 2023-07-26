@@ -1,8 +1,6 @@
 const Cars = require("../models/carModels");
 const asyncHandler = require("express-async-handler");
 const cloudinary = require('cloudinary').v2;
-//const upload = require("../middleware/uploadImageHandler")
-//const fs = require('fs');
 
 //@desc get All cars
 //@route api/cars/getAll
@@ -30,11 +28,11 @@ const getCars = asyncHandler(async(req,res)=>{
 });
 
 cloudinary.config({ 
-        cloud_name: 'dph227bch', 
-        api_key: '671337158813626', 
-        api_secret: 'ItaSlE_wJILfAnc6855VfZil09g',
-        secure: true
-      });
+    cloud_name: 'dph227bch', 
+    api_key: '671337158813626', 
+    api_secret: 'ItaSlE_wJILfAnc6855VfZil09g',
+    secure: true
+  });
 
 //@desc create car
 //@route api/cars/
@@ -45,9 +43,18 @@ const createCars = asyncHandler(async(req,res)=>{
     console.log(req.body);
     console.log(req.file);
     await Cars.create({
+    user_id:req.user.id,
     carname:req.body.carname,
     model:req.body.model,
     year:req.body.year,
+    price:req.body.price,
+    carnumber:req.body.carnumber,
+    enginecapacity:req.body.enginecapacity,
+    tyre:req.body.tyre,
+    fuel:req.body.fuel,
+    powersteering:req.body.powersteering,
+    noofowners:req.body.noofowners,
+    kilometer:req.body.kilometer,
     image:imageUrl
     
 }).then((res)=>{

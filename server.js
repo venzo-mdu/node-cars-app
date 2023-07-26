@@ -22,7 +22,7 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/cars",require("./routes/carRoutes") );
 app.use(errorHandler);
 //making the folder static
-app.use('/uploads',express.static('uploads'));
+// app.use('/uploads',express.static('uploads'));
 
 app.listen(port, () =>{
     console.log(`server is running port: ${port}`)

@@ -7,8 +7,8 @@ const jwt = require("jsonwebtoken")
 //@route api/users/register
 //@access public
 const registerUser = asyncHandler(async(req,res)=>{
-    const { username,email,password} = req.body;
-    if(!username || !password || !email){
+    const { username,email,password,role} = req.body;
+    if(!username || !password || !email ||!role){
         res.status(400);
         throw new Error("All fields are mandatory");
     }
@@ -27,6 +27,7 @@ const registerUser = asyncHandler(async(req,res)=>{
         username,
         email,
         password:hashedPassword,
+        
     });
       
     console.log(`User created ${user}`);
