@@ -51,12 +51,12 @@ const createCars = asyncHandler(async (req, res) => {
             year: req.body.year,
             price: req.body.price,
             carnumber: req.body.carnumber,
-            enginecapacity: req.body.enginecapacity,
-            tyre: req.body.tyre,
-            fuel: req.body.fuel,
-            powersteering: req.body.powersteering,
-            noofowners: req.body.noofowners,
-            kilometer: req.body.kilometer,
+            // enginecapacity: req.body.enginecapacity,
+            // tyre: req.body.tyre,
+            // fuel: req.body.fuel,
+            // powersteering: req.body.powersteering,
+            // noofowners: req.body.noofowners,
+            // kilometer: req.body.kilometer,
             image: imageUrl
         });
         // res.send('Image and details saved successfully');
