@@ -51,13 +51,13 @@ const createCars = asyncHandler(async (req, res) => {
             year: req.body.year,
             price: req.body.price,
             carnumber: req.body.carnumber,
-            image: imageUrl
-            // enginecapacity: req.body.enginecapacity,
-            // tyre: req.body.tyre,
-            // fuel: req.body.fuel,
-            // powersteering: req.body.powersteering,
-            // noofowners: req.body.noofowners,
-            // kilometer: req.body.kilometer,
+            image: imageUrl,
+            enginecapacity: req.body.enginecapacity,
+            tyre: req.body.tyre,
+            fuel: req.body.fuel,
+            powersteering: req.body.powersteering,
+            noofowners: req.body.noofowners,
+            kilometer: req.body.kilometer,
             //image: imageUrl
         })
     }catch(error) {
