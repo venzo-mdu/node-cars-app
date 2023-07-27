@@ -38,19 +38,20 @@ cloudinary.config({
 //@route api/cars/
 //@access public
 const createCars = asyncHandler(async (req, res) => {
-    // console.log(req.body.base64Image, "dta1");
-    try {
-        // console.log(req.body.base64Image, "dta2");
-        // const uploadResult = await cloudinary.uploader.upload(req.body);
-        // const imageUrl = uploadResult.secure_url;
-        // res.json({ imageUrl: uploadResult.secure_url })
-        await Cars.create({
-            //user_id: req.user.id,
+    try{
+    console.log(req.body.base64Image, "dta1");
+        console.log(req.body.base64Image, "dta2");
+        const uploadResult = await cloudinary.uploader.upload(req.body.base64Image);
+        const imageUrl = uploadResult.secure_url;
+        res.json({ imageUrl: uploadResult.secure_url })
+            const cars = Cars.create({
+            // user_id: req.user.id,
             carname: req.body.carname,
             model: req.body.model,
             year: req.body.year,
             price: req.body.price,
             carnumber: req.body.carnumber,
+            image: imageUrl
             // enginecapacity: req.body.enginecapacity,
             // tyre: req.body.tyre,
             // fuel: req.body.fuel,
@@ -58,12 +59,10 @@ const createCars = asyncHandler(async (req, res) => {
             // noofowners: req.body.noofowners,
             // kilometer: req.body.kilometer,
             //image: imageUrl
-        });
-        // res.send('Image and details saved successfully');
-    } catch (err) {
-        console.log(err)
-        res.status(500).json({ error: 'image and detail not saved ,something went wrong' })
-    }
+        })
+    }catch(error) {
+        console.log(error);
+}
 });
 
 //@desc get one car
@@ -90,11 +89,11 @@ const updateCars = asyncHandler(async (req, res) => {
         throw new Error("Cars not found");
     }
     //console.log("reqest bdy",req.body);
-    //making route private
-    if (cars.user_id.toString() !== req.user.id) {
-        res.status(403);
-        throw new Error("User dont't have permission to update other user details")
-    }
+    // //making route private
+    // if (cars.user_id.toString() !== req.user.id) {
+    //     res.status(403);
+    //     throw new Error("User dont't have permission to update other user details")
+    // }
 
     const updatedCars = await Cars.findByIdAndUpdate(
         req.params.id,
@@ -117,11 +116,11 @@ const deleteCars = asyncHandler(async (req, res) => {
         throw new Error("car not found");
     }
 
-    //making route private
-    if (cars.user_id.toString() !== req.user.id) {
-        res.status(403);
-        throw new Error("User dont't have permission to delete other user details")
-    }
+    // //making route private
+    // if (cars.user_id.toString() !== req.user.id) {
+    //     res.status(403);
+    //     throw new Error("User dont't have permission to delete other user details")
+    // }
     await Cars.deleteOne({ _id: req.params.id });
     res.status(200).json(cars);
 

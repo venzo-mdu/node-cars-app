@@ -8,8 +8,8 @@ const validateToken = require("../middleware/validateTokenHandler");
 router.get("/getAll",getAllCars);
 router.get("/",validateToken,getCars);
 router.post("/",createCars);
-router.get("/:id",validateToken,getCarByid);
-router.put("/:id",validateToken,updateCars);
-router.delete("/:id",validateToken,deleteCars);
+router.get("/:id",getCarByid);
+router.put("/:id",updateCars);
+router.delete("/:id",deleteCars);
 
 module.exports = router;
