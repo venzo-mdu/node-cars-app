@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const carSchema = mongoose.Schema(
     {
-        // user_id:{
-        //     type:mongoose.Schema.Types.ObjectId,
-        //     reuired:true,
-        //     ref:"User",
-        // },
+        user_id:{
+            type:mongoose.Schema.Types.ObjectId,
+            required:true,
+            ref:"User",
+        },
         carname:{
             type : String,
             required:[true,"Please add car name"]
@@ -53,6 +53,10 @@ const carSchema = mongoose.Schema(
         noofowners:{
             type:String,
             required:[true,"please add noofowners"]
-        }
-});
+        },
+    },
+    {
+        timestamps: true
+    },
+);
 module.exports = mongoose.model("Cars",carSchema);

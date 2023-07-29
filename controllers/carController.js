@@ -1,4 +1,5 @@
 const Cars = require("../models/carModels");
+const Book = require("../models/bookModel");
 const asyncHandler = require("express-async-handler");
 const cloudinary = require('cloudinary').v2;
 
@@ -44,8 +45,9 @@ const createCars = asyncHandler(async (req, res) => {
         const uploadResult = await cloudinary.uploader.upload(req.body.base64Image);
         const imageUrl = uploadResult.secure_url;
         res.json({ imageUrl: uploadResult.secure_url })
+            console.log("user id",req.user.id)
             const cars = Cars.create({
-            // user_id: req.user.id,
+            user_id: req.user.id,
             carname: req.body.carname,
             model: req.body.model,
             year: req.body.year,
@@ -63,6 +65,51 @@ const createCars = asyncHandler(async (req, res) => {
     }catch(error) {
         console.log(error);
 }
+});
+
+//@desc book cars
+//@route api/cars/booknow
+//@access private
+const bookCars = asyncHandler(async (req, res) => {
+    console.log("params id",req.params.id);
+    const cars = await Cars.findById(req.params.id);
+    console.log("carnamee",cars.carname)
+    console.log("carname",req.params.id.carname);
+    console.log("cars is ",cars);
+    if(!cars){
+        res.status(404);
+        throw new Error("Car not found");
+    } 
+    console.log("reqqqq",req.user.id);
+    console.log("cars id",cars.user_id);
+    // if (cars.user_id.toString() !== req.user.id) {
+    //     res.status(403);
+    //     throw new Error("User dont't have permission to update other user details")
+    // }
+    const book = new Book({
+        user_id: req.user.id,
+        car_id:req.params.id,
+        user_availability:req.body.user_availability,
+        carname: cars.carname,
+        model: cars.model,
+        year: cars.year,
+        price: cars.price,
+        carnumber: cars.carnumber,
+        image: cars.imageUrl,
+        enginecapacity: cars.enginecapacity,
+        tyre: cars.tyre,
+        fuel: cars.fuel,
+        powersteering: cars.powersteering,
+        noofowners: cars.noofowners,
+        kilometer: cars.kilometer,
+        
+    }).save()
+    .then((res)=>{
+        console.log("booking saved success")
+    }).catch((err)=>{
+        console.log(err,"error has occured")
+    });
+   // res.send("car booked successfully");
 });
 
 //@desc get one car
@@ -89,11 +136,11 @@ const updateCars = asyncHandler(async (req, res) => {
         throw new Error("Cars not found");
     }
     //console.log("reqest bdy",req.body);
-    // //making route private
-    // if (cars.user_id.toString() !== req.user.id) {
-    //     res.status(403);
-    //     throw new Error("User dont't have permission to update other user details")
-    // }
+    //making route private
+    if (cars.user_id.toString() !== req.user.id) {
+        res.status(403);
+        throw new Error("User dont't have permission to update other user details")
+    }
 
     const updatedCars = await Cars.findByIdAndUpdate(
         req.params.id,
@@ -116,14 +163,14 @@ const deleteCars = asyncHandler(async (req, res) => {
         throw new Error("car not found");
     }
 
-    // //making route private
-    // if (cars.user_id.toString() !== req.user.id) {
-    //     res.status(403);
-    //     throw new Error("User dont't have permission to delete other user details")
-    // }
+    //making route private
+    if (cars.user_id.toString() !== req.user.id) {
+        res.status(403);
+        throw new Error("User dont't have permission to delete other user details")
+    }
     await Cars.deleteOne({ _id: req.params.id });
     res.status(200).json(cars);
 
 });
 
-module.exports = { getAllCars, createCars, getCars, getCarByid, updateCars, deleteCars };
+module.exports = { getAllCars, createCars, getCars, getCarByid, updateCars, deleteCars,bookCars };

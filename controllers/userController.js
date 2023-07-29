@@ -2,13 +2,14 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModels");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
+// const refreshTokens = [];
 
 //@desc register 
 //@route api/users/register
 //@access public
 const registerUser = asyncHandler(async(req,res)=>{
-    const { username,email,password,role} = req.body;
-    if(!username || !password || !email ||!role){
+    const { username,email,password} = req.body;
+    if(!username || !password || !email){
         res.status(400);
         throw new Error("All fields are mandatory");
     }
@@ -64,6 +65,7 @@ const loginUser = asyncHandler(async(req,res)=>{
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn:"15m"}
         );
+        // refreshTokens.push(refreshToken);
         res.status(200).json({accessToken});
     }else{
         res.status(401);
@@ -89,5 +91,20 @@ const usersList = asyncHandler(async(req,res)=>{
     const usersList = await User.find();
     res.status(200).json(usersList);
 });
+
+// const signOut = asyncHandler(async(req,res)=>{
+//     console.log("inside sign out")
+//     if(req.headers && req.headers.authorization){
+//         const token = req.headers.authorization.split(' ')[1];
+//         console.log(token)
+//         if(!token){
+//             return res.status(401).json({success:false, message:"User not authorized"})
+//         }
+//         const tokens = req.user.tokens;
+//         const newTokens = tokens.filter(t => t.token !== token);
+//         await User.findByIdAndUpdate(req.user._id,{tokens:newTokens});
+//         res.json({success:true, message:'Sign Out successfully!'});
+//     }
+// });
 
 module.exports = {registerUser,loginUser,currentUser,usersList};
