@@ -49,6 +49,7 @@
 13.private delete booked car = https://cars2-node-app.onrender.com/api/book/:id,
 		   	    request type:[DELETE],
 	           	    request params:id(book_id)
+                    
 14.private check the bookings of car you posted - https://cars2-node-app.onrender.com/api/book/check/:id,
                     request type:[GET],
                     request params:id(car_id)
