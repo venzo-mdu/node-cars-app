@@ -30,6 +30,7 @@ const bookCars = asyncHandler(async (req,res)=>{
         user_id:req.user.id,
         cars:req.params.id,
         user_availability:req.body.user_availability,
+        contact_no:req.body.contact_no
         });
         const savedBooking = await book.save();
         console.log("Booking successfully");
@@ -87,7 +88,7 @@ const myCarIsBooked = asyncHandler(async (req, res) => {
         res.status(403).json({message:"Token does not match, You can't see other persons car booking details"});
         throw new Error("You can't see other persons car bookings");
     }
-    const bookedCars = await Book.find({ cars : carId }).populate('user_id','username');
+    const bookedCars = await Book.find({ cars : carId }).populate('user_id','username contact_no');
     if (bookedCars.length === 0) {
         return res.status(404).json({ message: 'Wait!, still your car is not booked' });
     }

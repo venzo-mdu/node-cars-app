@@ -15,10 +15,12 @@ const bookingSchema = mongoose.Schema({
     user_availability:{
         type: String,
         required: [true, "Please enter the date of available"],
+    },
+    contact_no:{
+        type: String,
+        required: [true, "Please provide your Number"],
     }
    
 });
-
-// bookingSchema.index({ cars: 1 }, { unique: true });
 
 module.exports = mongoose.model("Book",bookingSchema);
