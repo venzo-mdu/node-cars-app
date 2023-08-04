@@ -67,6 +67,7 @@ const loginUser = asyncHandler(async(req,res)=>{
         );
         // refreshTokens.push(refreshToken);
         res.status(200).json({accessToken});
+        console.log("accesstoken is +++",accessToken);
     }else{
         res.status(401);
         throw new Error("Email or password is not valid");
