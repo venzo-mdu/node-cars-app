@@ -20,6 +20,7 @@ const getAllCars = asyncHandler(async (req, res) => {
 const getCars = asyncHandler(async (req, res) => {
     //making route private 
     const cars = await Cars.find({ user_id: req.user.id });
+    console.log(req.user.id);
     if (!cars) {
         res.status(404);
         throw new Error("car not found");

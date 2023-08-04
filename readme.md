@@ -40,6 +40,7 @@
 	   
 11.private book car = https://cars2-node-app.onrender.com/api/book/:id,
 		   request type:[POST],
+		   request body:"user_availability":"","contact_no":""
 	           request params:id(car)
 
 12.private get book car = https://cars2-node-app.onrender.com/api/book/:id,
